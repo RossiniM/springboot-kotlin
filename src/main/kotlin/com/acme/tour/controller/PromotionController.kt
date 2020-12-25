@@ -1,6 +1,7 @@
 package com.acme.tour.controller
 
 import com.acme.tour.model.Promotion
+import com.acme.tour.services.PromotionServices
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,38 +11,27 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.util.concurrent.ConcurrentHashMap
 
 @RestController
 class PromotionController {
 
     @Autowired
-    lateinit var promotionMap: ConcurrentHashMap<Long, Promotion>
+    lateinit var promotionServices: PromotionServices
 
     @GetMapping(value = ["/promotion/{id}"])
-    fun getById(@PathVariable id: Long): Promotion? = promotionMap[id]
-
+    fun getById(@PathVariable id: Long): Promotion? = promotionServices.getById(id)
 
     @GetMapping(value = ["/promotion"])
-    fun getAll(@RequestParam(required = false, defaultValue = "") localFilter: String)  =
-        localFilter
-            .takeIf(String::isNullOrBlank)
-            ?.let { promotionMap.values }
-            ?: promotionMap.filterValues { promotion -> promotion.local.contains(localFilter, true) }
-
+    fun getAll(@RequestParam(required = false, defaultValue = "") localFilter: String) =
+        promotionServices.searchByLocal(localFilter)
 
     @PostMapping(value = ["/promotion"])
-    fun create(@RequestBody promotion: Promotion) {
-        promotionMap[promotion.id] = promotion
-    }
+    fun create(@RequestBody promotion: Promotion) = promotionServices.create(promotion)
 
     @PutMapping(value = ["/promotion/{id}"])
-    fun update(@PathVariable id: Long, @RequestBody promotion: Promotion) {
-        promotionMap.remove(id)
-        promotionMap[id] = promotion
-    }
+    fun update(@PathVariable id: Long, @RequestBody promotion: Promotion) = promotionServices.update(id, promotion)
 
     @DeleteMapping(value = ["/promotion/{id}"])
-    fun delete(@PathVariable id: Long) = promotionMap.remove(id)
+    fun delete(@PathVariable id: Long) = promotionServices.delete(id)
 
 }

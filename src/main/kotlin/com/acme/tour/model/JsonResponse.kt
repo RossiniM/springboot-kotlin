@@ -1,10 +1,12 @@
 package com.acme.tour.model
 
 import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonInclude
 import org.springframework.http.HttpStatus
 import java.util.Date
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 enum class JsonResponse(val message: String = "", val date: Date = Date(), val httpStatus: HttpStatus, var description: String? = null) {
     OK("OK", httpStatus = HttpStatus.OK),
     ACCEPTED("ACCEPTED", httpStatus = HttpStatus.ACCEPTED),

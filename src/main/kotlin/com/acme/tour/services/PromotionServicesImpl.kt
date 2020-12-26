@@ -1,42 +1,22 @@
 package com.acme.tour.services
 
 import com.acme.tour.model.Promotion
+import com.acme.tour.repository.PromotionRepository
 import org.springframework.stereotype.Component
-import java.util.concurrent.ConcurrentHashMap
 
 @Component
-class PromotionServicesImpl : PromotionServices {
+class PromotionServicesImpl(val promotionRepository: PromotionRepository) : PromotionServices {
 
-    companion object {
-        val initialPromotion = arrayListOf(
-            Promotion(1, "notal", "loja do mecanico", true, 5, 500),
-            Promotion(2, "notal", "loja do mecanico", true, 10, 1000),
-            Promotion(3, "notal", "loja do mecanico", true, 6, 500),
-            Promotion(4, "notal", "loja do mecanico", true, 7, 800)
-        )
-    }
-
-    var promotionMap = ConcurrentHashMap(initialPromotion.associateBy(Promotion::id))
-
-    override fun getById(id: Long): Promotion? = promotionMap[id]
+    override fun getById(id: Long): Promotion? = promotionRepository.findById(id).orElse(null)
 
     override fun create(promotion: Promotion) {
-        promotionMap[promotion.id] = promotion
+        promotionRepository.save(promotion)
     }
 
-    override fun update(id: Long, promotion: Promotion) {
-        promotionMap.remove(id)
-        promotionMap[id] = promotion
-    }
+    override fun update(id: Long, promotion: Promotion) = create(promotion)
 
-    override fun delete(id: Long) = promotionMap.remove(id)
+    override fun delete(id: Long) = promotionRepository.delete(Promotion(id = id))
 
-    override fun searchByLocal(localFilter: String): Collection<Promotion> =
-        localFilter
-            .takeIf(String::isNullOrBlank)
-            ?.let { promotionMap.values }
-            ?: promotionMap
-                .filterValues { promotion -> promotion.local.contains(localFilter, true) }
-                .values
+    override fun getAll(localFilter: String): Collection<Promotion> = promotionRepository.findAll()
 
 }

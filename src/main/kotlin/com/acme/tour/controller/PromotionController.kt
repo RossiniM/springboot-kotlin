@@ -35,7 +35,7 @@ class PromotionController {
         @RequestParam(required = false,
             defaultValue = "") localFilter: String,
     ): ResponseEntity<Collection<Promotion>> {
-        val promotionCollection = promotionServices.searchByLocal(localFilter)
+        val promotionCollection = promotionServices.getAll(localFilter)
         return ResponseEntity<Collection<Promotion>>(promotionCollection, HttpStatus.OK)
     }
 

@@ -6,6 +6,6 @@ interface PromotionServices {
     fun getById(id: Long): Promotion?
     fun create(promotion: Promotion)
     fun update(id: Long, promotion: Promotion)
-    fun delete(id: Long): Promotion?
-    fun searchByLocal(local: String): Collection<Promotion>
+    fun delete(id: Long)
+    fun getAll(local: String): Collection<Promotion>
 }

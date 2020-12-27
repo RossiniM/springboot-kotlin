@@ -7,5 +7,6 @@ interface PromotionServices {
     fun create(promotion: Promotion)
     fun update(id: Long, promotion: Promotion)
     fun delete(id: Long)
-    fun getAll(local: String): Collection<Promotion>
+    fun getAll(start: Int, size:Int): Collection<Promotion>
+    fun count():Long
 }

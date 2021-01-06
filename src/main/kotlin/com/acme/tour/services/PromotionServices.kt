@@ -7,6 +7,8 @@ interface PromotionServices {
     fun create(promotion: Promotion)
     fun update(id: Long, promotion: Promotion)
     fun delete(id: Long)
-    fun getAll(start: Int, size:Int): Collection<Promotion>
-    fun count():Long
+    fun getAll(start: Int, size: Int): Collection<Promotion>
+    fun getAllSortedByLocal(start: Int, size: Int): Collection<Promotion>
+    fun count(): Long
+    fun findByPriceLessThan(price: Double): Collection<Promotion>
 }

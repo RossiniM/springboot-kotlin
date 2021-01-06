@@ -32,12 +32,29 @@ class PromotionController {
         return ResponseEntity(promotion, status)
     }
 
-    @GetMapping
+    @GetMapping()
     fun getAll(
         @RequestParam(required = false, defaultValue = "0") start: Int,
         @RequestParam(required = false, defaultValue = "3") size: Int,
     ): ResponseEntity<Collection<Promotion>> {
         val promotionCollection = promotionServices.getAll(start, size)
+        return ResponseEntity<Collection<Promotion>>(promotionCollection, HttpStatus.OK)
+    }
+
+    @GetMapping(value = ["/sortedByLocal"])
+    fun getAllSortedByLocal(
+        @RequestParam(required = false, defaultValue = "0") start: Int,
+        @RequestParam(required = false, defaultValue = "3") size: Int,
+    ): ResponseEntity<Collection<Promotion>> {
+        val promotionCollection = promotionServices.getAllSortedByLocal(start, size)
+        return ResponseEntity<Collection<Promotion>>(promotionCollection, HttpStatus.OK)
+    }
+
+    @GetMapping(value = ["/lessThan"])
+    fun getAllLessThan9000(
+        @RequestParam(required = false, defaultValue = "0") price: Double,
+    ): ResponseEntity<Collection<Promotion>> {
+        val promotionCollection = promotionServices.findByPriceLessThan(price)
         return ResponseEntity<Collection<Promotion>>(promotionCollection, HttpStatus.OK)
     }
 

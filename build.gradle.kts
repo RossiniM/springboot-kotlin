@@ -22,6 +22,10 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation( "mysql:mysql-connector-java:8.0.22")
+	implementation("io.springfox:springfox-swagger2:2.9.2")
+	implementation("io.springfox:springfox-swagger-ui:2.9.2")
+	implementation("org.springframework.boot:spring-boot-starter-actuator:2.4.1")
+	implementation("org.springframework.boot:spring-boot-starter-cache:2.4.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

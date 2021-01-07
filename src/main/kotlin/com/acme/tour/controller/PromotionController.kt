@@ -3,6 +3,7 @@ package com.acme.tour.controller
 import com.acme.tour.model.JsonResponse
 import com.acme.tour.model.JsonResponse.*
 import com.acme.tour.model.Promotion
+import com.acme.tour.model.PromotionPriceUpdateDTO
 import com.acme.tour.services.PromotionServices
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -80,4 +81,13 @@ class PromotionController {
 
     @GetMapping(value = ["/count"])
     fun count(): ResponseEntity<Map<String, Long>> = ResponseEntity.status(HttpStatus.OK).body(mapOf("count" to promotionServices.count()))
+
+    @PutMapping(value = ["/updatePriceByLocal"])
+    fun updatePriceByLocal(@RequestBody dto:PromotionPriceUpdateDTO): ResponseEntity<JsonResponse> {
+        val (price, local) = dto
+        promotionServices.updatePriceByLocal(price,local)
+        return ResponseEntity(ACCEPTED, ACCEPTED.httpStatus)
+
+    }
+
 }

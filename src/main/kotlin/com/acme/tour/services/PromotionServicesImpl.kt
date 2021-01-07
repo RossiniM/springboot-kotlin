@@ -32,4 +32,6 @@ class PromotionServicesImpl(val promotionRepository: PromotionRepository) : Prom
 
     override fun findByPriceLessThan(price: Double): Collection<Promotion> = promotionRepository.findByPriceLessThan(price)
 
+    override fun updatePriceByLocal(newPrice: Double, local: String) = promotionRepository.updatePriceByLocal(newPrice, local)
+
 }

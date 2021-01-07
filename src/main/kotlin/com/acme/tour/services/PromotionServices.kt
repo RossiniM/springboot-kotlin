@@ -11,4 +11,5 @@ interface PromotionServices {
     fun getAllSortedByLocal(start: Int, size: Int): Collection<Promotion>
     fun count(): Long
     fun findByPriceLessThan(price: Double): Collection<Promotion>
+    fun updatePriceByLocal(newPrice:Double, local:String)
 }
